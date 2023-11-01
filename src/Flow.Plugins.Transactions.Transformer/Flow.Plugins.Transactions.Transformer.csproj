@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>flow-tt</AssemblyName>
+        <Title>flow tt</Title>
+        <Authors>nvsnkv</Authors>
+        <Copyright>© nvsnkv 2023</Copyright>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <TargetFramework>net7.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CsvHelper" Version="30.0.1" />
+      <PackageReference Include="Flow.Infrastructure.Plugins.Contract" Version="3.2.0" />
+      <PackageReference Include="System.Linq.Async" Version="6.0.1" />
+    </ItemGroup>
+
+</Project>

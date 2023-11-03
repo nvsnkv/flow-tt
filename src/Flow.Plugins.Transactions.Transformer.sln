@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flow.Plugins.Transactions.Transformer", "Flow.Plugins.Transactions.Transformer\Flow.Plugins.Transactions.Transformer.csproj", "{7FE6DA47-6EC4-4971-AD34-6766794EB553}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flow.Plugins.Transactions.Transformer.Tests", "Flow.Plugins.Transactions.Transformer.Tests\Flow.Plugins.Transactions.Transformer.Tests.csproj", "{2FEFCE58-5EBD-47A2-9A1A-99821070529E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{7FE6DA47-6EC4-4971-AD34-6766794EB553}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FE6DA47-6EC4-4971-AD34-6766794EB553}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FE6DA47-6EC4-4971-AD34-6766794EB553}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FEFCE58-5EBD-47A2-9A1A-99821070529E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FEFCE58-5EBD-47A2-9A1A-99821070529E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FEFCE58-5EBD-47A2-9A1A-99821070529E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FEFCE58-5EBD-47A2-9A1A-99821070529E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

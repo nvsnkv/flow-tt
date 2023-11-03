@@ -7,15 +7,13 @@ namespace Flow.Plugins.Transactions.Transformer;
 internal sealed class RowMapper
 {
     private readonly CultureInfo _culture;
-    private readonly IDictionary<string, int> _mapping;
 
-    public RowMapper(IDictionary<int, string> mapping, CultureInfo culture)
+    public RowMapper(CultureInfo culture)
     {
         _culture = culture;
-        _mapping = mapping.ToDictionary(p => p.Value, p => p.Key);
     }
 
-    public IncomingTransaction Map(Dictionary<int,string?> row)
+    public IncomingTransaction Map(Dictionary<string,string?> row)
     {
         var timestamp = DateTime.MinValue;
         var amount = Decimal.MinValue;
@@ -31,9 +29,9 @@ internal sealed class RowMapper
 
         Overrides? overrides = null;
 
-        foreach (var map in _mapping)
+        foreach (var map in row)
         {
-            var value = row[map.Value];
+            var value = map.Value;
 
             switch (map.Key)
             {
@@ -57,23 +55,23 @@ internal sealed class RowMapper
                     currency = value ?? string.Empty;
                     break;
 
-                case nameof(Transaction.Account):
+                case $"{nameof(Transaction.Account)}{nameof(Transaction.Account.Name)}":
                     name = value ?? string.Empty;
                     break;
 
-                case nameof(Transaction.Account.Bank):
+                case $"{nameof(Transaction.Account)}{nameof(Transaction.Account.Bank)}":
                     bank = value ?? string.Empty;
                     break;
 
-                case "TitleOverride":
+                case $"{nameof(Overrides)}{nameof(Overrides.Title)}":
                     titleOverride = value;
                     break;
 
-                case "CategoryOverride":
+                case $"{nameof(Overrides)}{nameof(Overrides.Category)}":
                     categoryOverride = value;
                     break;
 
-                case nameof(Overrides.Comment):
+                case $"{nameof(Overrides)}{nameof(Overrides.Comment)}":
                     comment = value;
                     break;
             }

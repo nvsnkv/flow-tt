@@ -11,19 +11,31 @@ TT uses json configuration file, that contains set of formats with transforamtio
 {
     "Formats": {
         "custom-csv": {
-            "Transform": {
-                0: { "Pattern": "USD", "Replacement": "$" },
-                1: ...
+            "Mapping": {
+                "Timestamp": 0,
+                "Amount": 1,
+                "Currency": 2,
+                "Category": 3,
+                "Title": 4,
+                "AccountName": 5,
+                "AccountBank": 6,
+                "OverridesComment": 7,
+                "OverridesCategory": 8,
+                "OverridesTitle": 9,
+                "Any Extra fields needed for validation": 20
             },
             "SkipIf": {
-                2: { "Pattern": "FAIL" }
+                "Any Extra fields needed for validation": { "Pattern": "FAIL" }
             },
-            "Mapping": {
-                0: "Currency"
-                1: "Amount"
-                ...
+            "Transform": {
+                "Currency": { "Pattern": "USD", "Replacement": "$" },
+                "OverridesComment": {"Pattern": "^(\d{4})$", "Replacement: "MCC $1"}
             }
+            
         }
     }
 }
 ```
+`Mapping` defines column-to-field map. `SkipIf` allows to ignore some transcations, like failed or pending ones, that match specified regular expression pattern. `Transform` allows to change input string using regular expressions.
+
+Single config file can contain multiple formats - the names should be unique.

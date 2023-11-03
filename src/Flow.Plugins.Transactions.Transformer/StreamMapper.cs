@@ -13,10 +13,10 @@ namespace Flow.Plugins.Transactions.Transformer;
 internal sealed class Mapper : IPlugin, IFormatSpecificReader<IncomingTransaction>
 {
     private readonly CultureInfo _culture;
-    private readonly IDictionary<int, Func<string?, string?>> _transforms = new Dictionary<int, Func<string?, string?>>();
-    private readonly IDictionary<int, Func<string?, bool>> _skipIf = new Dictionary<int, Func<string?, bool>>();
+    private readonly Dictionary<string, Func<string?, string?>> _transforms = new();
+    private readonly Dictionary<string, Func<string?, bool>> _skipIf = new ();
     private readonly RowMapper _mapper;
-    private readonly int[] _columnIds;
+    private readonly IDictionary<string,int> _mapping;
 
     public Mapper(SupportedFormat format, RuleSet ruleSet, CultureInfo culture)
     {
@@ -41,10 +41,9 @@ internal sealed class Mapper : IPlugin, IFormatSpecificReader<IncomingTransactio
             }
         }
 
-        var mapping = ruleSet.Mapping ?? new Dictionary<int, string>();
-        _mapper = new RowMapper(mapping, culture);
+        _mapping = ruleSet.Mapping ?? new Dictionary<string, int>();
+        _mapper = new RowMapper(culture);
 
-        _columnIds = _transforms.Keys.Union(_skipIf.Keys).Union(mapping.Keys).Distinct().ToArray();
 
         Format = format;
         _culture = culture;
@@ -55,8 +54,8 @@ internal sealed class Mapper : IPlugin, IFormatSpecificReader<IncomingTransactio
 
     private async IAsyncEnumerable<IncomingTransaction> ReadAsync(StreamReader reader, [EnumeratorCancellation] CancellationToken ct)
     {
-        using var csv = new CsvReader(reader, new CsvConfiguration(_culture) { HasHeaderRecord = true }, true);
-        var row = new Dictionary<int, string?>();
+        using var csv = new CsvReader(reader, new CsvConfiguration(_culture) { HasHeaderRecord = true, MissingFieldFound = null }, true);
+        var row = new Dictionary<string, string?>();
         while (await csv.ReadAsync())
         {
             if (ct.IsCancellationRequested)
@@ -66,17 +65,21 @@ internal sealed class Mapper : IPlugin, IFormatSpecificReader<IncomingTransactio
 
             row.Clear();
 
-            foreach (var id in _columnIds)
+            var shouldSkip = false;
+            foreach (var map in _mapping)
             {
-                row[id] = csv.GetField(id);
+                var value = csv.GetField(map.Value);
+                if (_transforms.TryGetValue(map.Key, out var transform))
+                {
+                    value = transform(value);
+                }
+
+                shouldSkip = shouldSkip || _skipIf.TryGetValue(map.Key, out var skip) && skip(value);
+                
+                row[map.Key] = value;
             }
 
-            foreach (var transform in _transforms)
-            {
-                row[transform.Key] = transform.Value(row[transform.Key]);
-            }
-
-            if (_skipIf.Any(r => r.Value(row[r.Key])))
+            if (shouldSkip)
             {
                 continue;
             }

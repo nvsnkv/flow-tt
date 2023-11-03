@@ -1,0 +1,29 @@
+﻿{
+  "Formats": {
+    "custom-csv": {
+      "Mapping": {
+        "Timestamp": 0,
+        "Amount": 4,
+        "Currency": 3,
+        "Category": 6,
+        "Title": 7,
+        "AccountName": 10,
+        "AccountBank": 11,
+        "OverridesComment": 5,
+        "OverridesCategory": 13,
+        "OverridesTitle": 14,
+        "Status": 8
+      },
+      "SkipIf": {
+        "Status": { "Pattern": "[^O][^K]" }
+      },
+      "Transform": {
+        "Currency": { "Pattern": "USD", "Replacement": "$" },
+        "OverridesComment": {"Pattern": "^(\\d{4})$", "Replacement": "MCC $1"},
+        "AccountName": { "Pattern": ".*", "Replacement": "Test Account"},
+        "AccountBank": { "Pattern": ".*", "Replacement": "Test Bank"}
+        }
+
+      }
+    }
+  }

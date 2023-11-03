@@ -2,9 +2,9 @@
 
 internal sealed class RuleSet
 {
-    public IDictionary<int, TransformRule>? Transform { get; set; }
+    public IDictionary<string, int>? Mapping { get; set; }
 
-    public IDictionary<int, MatchRule>? SkipIf { get; set; }
+    public IDictionary<string, TransformRule>? Transform { get; set; }
 
-    public IDictionary<int, string>? Mapping { get; set; }
+    public IDictionary<string, MatchRule>? SkipIf { get; set; }
 }

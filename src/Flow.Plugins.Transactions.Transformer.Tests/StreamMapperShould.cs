@@ -10,7 +10,7 @@ public class StreamMapperShould
     [Fact]
     public async Task ProcessValidFileWithTransformsAndSkipIfRules()
     {
-        var bootstrapper = new Bootstrapper("TestData/format.json", CultureInfo.CurrentCulture);
+        var bootstrapper = new Bootstrapper("TestData/format.json", CultureInfo.GetCultureInfo("ru-RU"));
         var mapper = bootstrapper.GetPlugins().SingleOrDefault() as IFormatSpecificReader<IncomingTransaction>;
         mapper.Should().NotBeNull("only one mapper expected from config");
 

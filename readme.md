@@ -1,6 +1,6 @@
 # Flow TT - a plugin for custom CSVs import
 
-Plugin allows to transform a custom CSV, skip invalid records and map each valid row to an `IncomingTransaction` instance.
+Plugin for [flow](https://github.com/nvsnkv/flow2) that allows to transform a custom CSV, skip invalid records and map each valid row to an `IncomingTransaction` instance.
 
 ## Usage
 Just copy TT binaries into separate folder with _flow_ plugins and start the app. TT will read its own configuration and provide readers for custom formats. These readers will be available for `flow tx add` and `flow import start` operations.
@@ -39,3 +39,8 @@ TT uses json configuration file, that contains set of formats with transforamtio
 `Mapping` defines column-to-field map. `SkipIf` allows to ignore some transcations, like failed or pending ones, that match specified regular expression pattern. `Transform` allows to change input string using regular expressions.
 
 Single config file can contain multiple formats - the names should be unique.
+
+## Building a plugin
+1. Build [plugin dependencies](https://github.com/nvsnkv/flow2/blob/master/build/_scripts/flow.plugin-deps.ps1) and wrap them into nuget packages
+2. Place them to `./dependencies` folder
+3. Build `./src/Flow.Plugins.Transactions.Transformer` and place binaries into a separate folder together with other plugins for your _flow_ instance

@@ -25,17 +25,17 @@ public class StreamMapperShould
     private static readonly IncomingTransaction[] ValidCSV =
     {
         new(
-            new(DateTime.Parse("01.10.2023 12:03"), -5.90m, "$", String.Empty, "Some withdraw",
+            new(new DateTime(2023, 10, 1, 12, 03, 00), -5.90m, "$", String.Empty, "Some withdraw",
                 new("Test Account", "Test Bank")),
             new(null, null, "MCC 9000")
         ),
         new(
-            new(DateTime.Parse("01.10.2023 12:04"), -4.90m, "$", String.Empty, "Some withdraw",
+            new(new DateTime(2023, 10, 1, 12, 04, 00), -4.90m, "$", String.Empty, "Some withdraw",
                 new("Test Account", "Test Bank")),
             new(null, null, "MCC 9000")
         ),
         new(
-            new(DateTime.Parse("01.10.2023 12:05"), -3.90m, "$", String.Empty, "Some withdraw",
+            new(new DateTime(2023, 10, 1, 12, 05, 00), -3.90m, "$", String.Empty, "Some withdraw",
                 new("Test Account", "Test Bank")),
             new(null, null, "MCC 9000")
         ),

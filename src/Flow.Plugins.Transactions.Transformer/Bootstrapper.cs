@@ -17,7 +17,7 @@ public class Bootstrapper : IPluginsBootstrapper
 
     public Bootstrapper(string? configFilePath, CultureInfo culture)
     {
-        this._configFilePath = configFilePath;
+        _configFilePath = configFilePath;
         _culture = culture;
     }
 
